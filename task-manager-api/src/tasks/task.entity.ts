@@ -8,6 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { TaskStatus } from './task-status.enum';
+import { TaskPriority } from './task-priority.enum';
 
 @Entity('tasks')
 export class Task {
@@ -19,12 +21,18 @@ export class Task {
   @Column()
   description: string;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: TaskStatus,
+    default: TaskStatus.PENDING,
+  })
+  status: TaskStatus;
 
-  @Column()
-  priority: string;
-
+  @Column({
+    type: 'enum',
+    enum: TaskPriority,
+    default: TaskPriority.LOW,
+  })
   @Column()
   dueDate: Date;
 
