@@ -1,0 +1,28 @@
+version: '3.8'  # Specify the version of the docker-compose file
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: myuser               # Define the PostgreSQL username
+      POSTGRES_PASSWORD: mysecurepassword # Define the PostgreSQL password
+      POSTGRES_DB: mydatabase             # Define the initial database name
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persist PostgreSQL data
+    ports:
+      - "5432:5432"                       # Expose PostgreSQL on port 5432
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@domain.com  # pgAdmin login email
+      PGADMIN_DEFAULT_PASSWORD: adminpassword # pgAdmin login password
+    ports:
+      - "8081:80"                         # Expose pgAdmin on port 8081
+    depends_on:
+      - postgres                          # Ensure pgAdmin starts after PostgreSQL
+
+volumes:
+  postgres-data:
