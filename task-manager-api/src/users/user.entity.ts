@@ -32,4 +32,7 @@ export class User {
 
   @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
+
+  @Column({ nullable: true })
+  refreshToken: string;
 }
